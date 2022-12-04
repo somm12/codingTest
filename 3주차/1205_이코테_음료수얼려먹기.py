@@ -21,3 +21,4 @@ for i in range(n):
             dfs(i,j)
             cnt += 1
 print(cnt)
+# arr.append(list(map(int,input()))) 정수 01001010 .. 입력 방법.
