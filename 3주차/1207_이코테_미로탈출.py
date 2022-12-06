@@ -20,7 +20,7 @@ def dfs(x, y):
             arr[nx][ny] = arr[x][y] + 1
             dfs(nx, ny)
 dfs(0,0)
-print(arr[n-1][m-1])
+print(arr)
 
 def bfs(x, y):
     q = deque([(x,y)])
@@ -36,7 +36,8 @@ def bfs(x, y):
                 arr[nx][ny] = arr[a][b] + 1
                 q.append((nx, ny))
                 
-bfs(0,0)
-print(arr[n-1][m-1])
+# bfs(0,0)
+# print(arr)
 
-# dfs, bfs 둘 다 풀 수 있지만, dfs는 재귀라서 시간초과 발생 가능. 최소거리는 bfs로 풀자.
+# dfs, bfs 둘 다 풀 수 있지만, dfs는 깊이 우선 탐색이기 때문에, dx, dy 방향을 설정한 것에 우선순위를 둬서 탐색을 하게되어
+# 최소거리를 구하지 못할 수 있으므로 최소거리 문제는 가까운 노드 부터 탐색하는 bfs로 풀자.
