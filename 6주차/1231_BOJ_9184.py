@@ -21,3 +21,5 @@ while True:
     if a == -1 and b == -1 and c == -1:
         break
     print('w({}, {}, {}) = {}'.format(a,b,c,w(a,b,c)))
+
+# 하향식 방식을 쓰면 더 쉽게 문제를 풀 수 있다.
