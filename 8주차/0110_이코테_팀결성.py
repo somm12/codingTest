@@ -29,3 +29,4 @@ for _ in range(m):
             print("YES")
         else:
             print("NO")
+# 입력 값이 최대 10만 => realine, recursion limit 쓰기.
