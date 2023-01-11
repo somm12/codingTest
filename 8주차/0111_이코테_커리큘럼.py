@@ -25,10 +25,9 @@ def topology_sort():
         now = q.popleft()
         for i in graph[now]:
             result[i] = max(result[i], result[now] + time[i])
-            indegree -= 1
+            indegree[i] -= 1
             if indegree[i] == 0:
                 q.append(i)
     for i in range(1, n+1):
         print(result[i])
-
 topology_sort()
