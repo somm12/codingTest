@@ -23,3 +23,5 @@ def solution(n, build_frame):
             if not possible(answer):
                 answer.remove([x,y,stuff])
     return sorted(answer)
+
+# 대표적인 시뮬레이션 문제로 문제의 조건에 정확하게 코드로 옮기는 것이 중요
