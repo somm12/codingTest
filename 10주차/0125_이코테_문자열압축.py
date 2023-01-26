@@ -1,6 +1,5 @@
 def sol2(s,n):
     li = [s[i : i + n] for i in range(0,len(s), n)]
-    print(li)
     res = []
     cnt = 1
     previous = li[0]
