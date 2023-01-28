@@ -42,10 +42,7 @@ for c in list(combinations(can,3)):
         for t in range(m):
             if g[k][t] == 2:
                 spread(k,t,g)
-                ans = max(ans, area(g))
-    if (1,0) in c :
-        print(g)
-        break
+    ans = max(ans, area(g))
     for i, j in c:
         graph[i][j] = 0
 print(ans)
