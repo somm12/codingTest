@@ -35,15 +35,14 @@ def area(g):
     return res
 
 for c in list(combinations(can,3)):
-    for i, j in c:
-        graph[i][j] = 1
     g = copy.deepcopy(graph)
+    for i, j in c:
+        g[i][j] = 1
     for k in range(n):
         for t in range(m):
             if g[k][t] == 2:
                 spread(k,t,g)
     ans = max(ans, area(g))
-    for i, j in c:
-        graph[i][j] = 0
+  
 print(ans)
         
