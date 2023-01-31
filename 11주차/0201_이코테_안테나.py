@@ -16,3 +16,5 @@ elif s1 < s2:
     print(a)
 else:
     print(min(a,b))
+
+# print(arr[(n-1)//2]) 로 간단하게 풀 수 있다.
