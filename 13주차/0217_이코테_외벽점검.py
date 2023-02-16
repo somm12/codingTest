@@ -11,7 +11,7 @@ def solution(n,weak,dist):
         for friends in list(permutations(dist, len(dist))):
             count = 1
             position = weak[start] + friends[count-1]
-            for i in range(start, start+length):
+            for i in range(start,start+length):
                 if position < weak[i]:
                     count += 1
                     if len(dist) < count:
@@ -21,4 +21,4 @@ def solution(n,weak,dist):
     if result > len(dist):
         return -1
     return result
-print(solution(12,[1,3,4,9,10],[3,5,7]))
+print(solution(12,[1,3,4,9,10],[1,2,3,4]))
