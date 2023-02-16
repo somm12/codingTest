@@ -1,3 +1,6 @@
+from glob import glob
+
+
 def rotate_90(a):
     n = len(a)
     m = len(a[0])
@@ -39,3 +42,41 @@ def solution(key, lock):
                         new_lock[x + i][y + j] -= key[i][j]
     return False
 # 다시풀기**
+
+
+def rotate(key):
+    length = len(key)
+    new_key = [[0]*length for _ in range(length)]
+    for i in range(length):
+        for j in range(length):
+            new_key[j][length-1-i] = key[i][j]
+    return new_key
+def solution(key,lock):
+    global result
+    result = True
+    n = len(lock)
+    m = len(key)
+    new_lock = [[0]*n*3 for _ in range(n*3)]
+    for i in range(n):
+        for j in range(n):
+            new_lock[i+n][j+n] = lock[i][j]
+    for _ in range(4):
+        key = rotate(key)
+        for x in range(2*n):
+            for y in range(2*n):
+                result = True
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x+i][y+j] += key[i][j]
+                for i in range(n,n*2):
+                    for j in range(n,n*2):
+                        if new_lock[i][j] != 1:
+                            result = False
+                if result:
+                    return result
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x+i][y+j] -= key[i][j]
+    return result
+print(solution([[0,0,0],[1,0,0],[0,1,1]],[[1,1,1],[1,1,0],[1,0,1]]))
+
