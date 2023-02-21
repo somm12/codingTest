@@ -1,10 +1,6 @@
 def solution(s):
-    answer = True
     n = len(s)
-    for i in s:
-        if not i.isnumeric():
-            return False
-    if n == 4 or n == 6:
+    if s.isnumeric() and (n == 4 or n == 6):
         return True
     else:
         return False
