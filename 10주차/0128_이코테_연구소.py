@@ -1,7 +1,6 @@
 import sys
 import copy
 input = sys.stdin.readline
-from itertools import combinations
 graph = []
 ans = 0
 n,m = map(int,input().split())
@@ -15,7 +14,7 @@ for i in range(n):
     for j in range(m):
         if graph[i][j] == 0:
             can.append((i,j))
-
+length = len(can)
 def spread(x,y,g):
     for i in range(4):
         nx = x + dx[i]
@@ -34,15 +33,33 @@ def area(g):
 
     return res
 
-for c in list(combinations(can,3)):
-    g = copy.deepcopy(graph)
-    for i, j in c:
-        g[i][j] = 1
-    for k in range(n):
-        for t in range(m):
-            if g[k][t] == 2:
-                spread(k,t,g)
-    ans = max(ans, area(g))
-  
+# for c in list(combinations(can,3)):
+#     g = copy.deepcopy(graph)
+#     for i, j in c:
+#         g[i][j] = 1
+#     for k in range(n):
+#         for t in range(m):
+#             if g[k][t] == 2:
+#                 spread(k,t,g)
+#     ans = max(ans, area(g))
+
+selected= []
+def dfs(L,s):
+    global ans
+    if L == 3:
+        g = copy.deepcopy(graph)
+        for i,j in selected:
+            g[i][j] = 1
+        for k in range(n):
+            for t in range(m):
+                if g[k][t] == 2:
+                    spread(k,t,g)
+        ans = max(ans, area(g))
+        return
+    for i in range(s,length):
+        selected.append(can[i])
+        dfs(L+1,i+1)
+        selected.pop()  
+dfs(0,0)
 print(ans)
         
