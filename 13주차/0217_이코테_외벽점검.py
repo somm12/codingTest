@@ -1,4 +1,4 @@
-from itertools import permutations
+from itertools import mutations
 
 
 def solution(n,weak,dist):
@@ -8,7 +8,7 @@ def solution(n,weak,dist):
         weak.append(weak[i]+n)
         
     for start in range(length):
-        for friends in list(permutations(dist, len(dist))):
+        for friends in list(mutations(dist, len(dist))):
             count = 1
             position = weak[start] + friends[count-1]
             for i in range(start,start+length):
