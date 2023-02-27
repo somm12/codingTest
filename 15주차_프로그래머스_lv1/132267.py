@@ -5,4 +5,4 @@ def solution(a, b, n):
         n = n- ((n//a)*a) + (n//a)*b
         
     return answer
-# 콜라문제
+# 콜라문제 update
