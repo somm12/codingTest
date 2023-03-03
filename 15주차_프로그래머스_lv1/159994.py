@@ -12,3 +12,4 @@ def solution(cards1, cards2, goal):
         else:
             return 'No'
     return 'Yes'
+# 카드 뭉치
