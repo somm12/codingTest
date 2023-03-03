@@ -16,4 +16,4 @@ def solution(babbling):
         else:
             answer += 1
     return answer
-# 옹알이
+# 옹알이2
