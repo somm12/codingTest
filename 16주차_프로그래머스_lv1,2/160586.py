@@ -14,10 +14,9 @@ def solution(keymap, targets):
             if t[i] in dict:
                 cnt += dict[t[i]]
             else:
-                answer.append(-1)
+                cnt = -1
                 break
-        else:
-            answer.append(cnt)    
+        answer.append(cnt)    
            
             
     return answer
