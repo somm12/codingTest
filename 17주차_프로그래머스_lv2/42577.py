@@ -1,7 +1,7 @@
 def solution(phone_book):
     answer = True
     dict = {}
-    phone_book.sort(key=len)ㅁ
+    phone_book.sort(key=len)
     for i in phone_book:
         if len(dict) == 0:
             dict[i] = 1
