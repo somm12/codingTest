@@ -23,3 +23,19 @@ def solution(files):
     return answer
 
 # 파일명 정렬
+
+import re
+def solution(files):
+    answer = []
+    arr = []
+    for idx,v in enumerate(files):
+        v = v.lower()
+        head,number,tail = re.match(r'([a-z-. ]+)(\d{,5})(.*)',v).groups()
+        arr.append((head,number,idx))
+    
+    arr.sort(key=lambda x:(x[0].lower(),int(x[1])))
+    for a,b,i in arr:
+        answer.append(files[i])
+    return answer
+
+# 정규식을 사용하면 위와 같이 표현 가능.
