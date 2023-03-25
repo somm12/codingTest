@@ -1,5 +1,4 @@
 def solution(number, k):
-    answer = ''
     stack = []
     cnt = 0
     for i,v in enumerate(number):
@@ -12,3 +11,4 @@ def solution(number, k):
     
     return ''.join(stack[:len(stack)-k])
 # 큰 수 만들기
+# ** 항상 반복문 내 return 은 예외 경우에 대비하여 가장 바깥 부분에 return도 생각하자.
