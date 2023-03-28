@@ -14,4 +14,4 @@ def solution(x, y, n):
                 dist[i] = dist[x] + 1
         
     return answer
-# 숫자 변환하기
+# 숫자 변환하기 -> 백준 숨바꼭질과 유사
