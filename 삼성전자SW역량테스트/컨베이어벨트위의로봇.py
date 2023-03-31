@@ -1,13 +1,14 @@
+from collections import deque
 n,k = map(int,input().split())
-belt = list(map(int,input().split()))
-robot = [0]*n
+belt = deque(list(map(int,input().split())))
+robot = deque([0]*n)
 
 step = 1
 while True:
-    belt = [belt[2*n-1]] + belt[:2*n-1]
-    robot = [0] + robot[:n-1]
-    if robot[n-1] == 1:
-        robot[n-1] = 0
+    belt.rotate(1)
+    robot[-1] = 0
+    robot.rotate(1)
+    robot[n-1] = 0
     for i in range(n-1,-1,-1):
         if robot[i] == 1:
             if i == n-1:
