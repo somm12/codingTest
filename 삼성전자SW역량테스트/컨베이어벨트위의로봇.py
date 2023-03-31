@@ -31,3 +31,4 @@ while True:
     step +=1
     
 print(step)
+# deque는 rotate를 사용해서 회전 가능하다.
