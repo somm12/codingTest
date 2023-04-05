@@ -24,3 +24,4 @@ def solution(relation):
     return len(avoid)
 
 # 후보키
+# {} < {} 오른쪽 집합에 포함 여부를 알 수 있음.
