@@ -15,7 +15,7 @@ for _ in range(m):
     ori_fish.append((x-1,y-1,d-1))
     ori_cnt[x-1][y-1] += 1
 # 상어가 움직일 수 있는 모든 방향 루트 64개.
-r= list(product([0,1,2,3],repeat = 3))
+r= list(product([0,1,2,3],repeat = 3))#### 중복 조합******
 
 sharkx, sharky = map(int,input().split())
 sharkx -=1
@@ -32,7 +32,7 @@ def move_fish():# 물고기 이동 후 위치 방향 배열 반
         for _ in range(8):
             nx = x + fx[tmpd]
             ny = y + fy[tmpd]
-
+            # ***** 상어가 있는 곳은 이동 할 수 없음.******* x != 상어x and y != 상어y 아님!!
             if 0 <= nx < 4 and 0<= ny < 4 and not (nx,ny) in smell and (nx,ny) != (sharkx,sharky):
                 new.append((nx,ny,tmpd))
 
@@ -59,6 +59,10 @@ def move_shark():
 
             nx += sx[i]
             ny += sy[i]
+            # **** 상어가 이동할 때, 다시 방문 했던 곳으로 갈 수 있기 때문에 제거된 물고기 수가 겹치지 않게
+            # 한다.
+            # 또한 복제가 되면서 상어와 물고기가 한 칸에 같이 존재할 수 있기 때문에, 상어가 있는 위치
+            # 먼저 방문처리 하면 안됨.
             if 0 <= nx < 4 and 0 <= ny < 4:
                 if not visited[nx][ny]:
                     cnt += new_cnt[nx][ny]
