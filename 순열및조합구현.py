@@ -36,3 +36,33 @@ def permutation(arr, r):
     
     return result
 print(permutation([1,2,3,4], 2))
+
+# 중복 조합 - 조합에서 해당 인덱스 **이상** 으로 추가.
+def combination2(arr,n):
+    res = []
+    def comb(p, idx):
+        if len(p) == n:
+            res.append(p)
+            return
+        for i in range(len(arr)):
+            if i >= idx:
+                comb(p+[arr[i]],i)
+    comb([],-1)
+    return res
+
+print(combination2([1,2,3,4],2))
+
+# 중복순열 - 순열에서 visited 빼기.
+def permutation2(arr,n):
+    tmp = []
+    # visited = [0]*len(arr)
+    def permute(p):
+        if len(p) == n:
+            tmp.append(p)
+            return
+        for i in range(len(arr)):
+            permute(p+[arr[i]])
+    permute([])
+    return tmp
+print("중복 순열")
+print(permutation2([1,2,3],3))
