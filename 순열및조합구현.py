@@ -44,7 +44,7 @@ def combination2(arr,n):
         if len(p) == n:
             res.append(p)
             return
-        for i in range(len(arr)):
+        for i in range(idx,len(arr)):
             if i >= idx:
                 comb(p+[arr[i]],i)
     comb([],-1)
