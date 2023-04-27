@@ -18,12 +18,8 @@ def dfs(now,egg):
             allbroken = False
             break
     if allbroken:# 자신을 제외한 다른 계란 모두 깨졌다면.
-        answer = max(answer, n-1)
+        dfs(now+1,egg)
         return
-        
-    # if egg[now][0] <= 0:# 또는 현재 손에 든 계란이 깨졌다면,
-    #     dfs(now+1,egg)
-    #     return
     
     for i in range(n):
         if i != now and egg[i][0] > 0:
