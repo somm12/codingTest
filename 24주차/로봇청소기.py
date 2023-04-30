@@ -20,7 +20,7 @@ while True:
             d -= 1
             if d < 0:
                 d = 3
-            if g[r+dx[d]][c+dy[d]] == 0:
+            if g[r+dx[d]][c+dy[d]] == 0:#반시계 90도 회전 후 해당 방향으로 빈칸이 존재하면 전진.
                 r += dx[d]
                 c += dy[d]
             break
