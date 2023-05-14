@@ -21,3 +21,4 @@ def dfs(L, total, add, minus, mul, div):
 dfs(0,arr[0],a,b,c,d)
 print(maxV)
 print(minV)
+# 백준 연산자 끼워넣기 문제
