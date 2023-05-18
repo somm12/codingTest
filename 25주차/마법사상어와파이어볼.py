@@ -8,22 +8,9 @@ for _ in range(M):
     ball.append([r-1,c-1,m,s,d])
 def move(): # 파이어볼 이동. 이동한 뒤의 파이어볼 정보를 담은 배열 반환.
     after = []
-    for x,y,m,s,d in ball:
-        nx = x
-        ny = y
-        for _ in range(s%n): # s칸 이동 -> n으로 나눈 나머지 만큼 이동.
-            nx += dx[d]
-            ny += dy[d]
-        # ** 각 처음과 끝의 행과 열이 연결 되어있음.
-        # 만약 이동시, 좌표 범위 초과 방지를 위해서 %n 필수. 음수일 때는 +n
-        if nx < 0: 
-            nx = -(abs(nx)%n) + n
-        else:
-            nx = nx%n
-        if ny < 0:
-            ny = -(abs(ny)%n) + n
-        else:
-            ny = ny%n
+    for x,y,m,s,d in ball: # 이동 후, 바뀐 좌표 계산식. => 외워두자!.
+        nx = (x + s * dx[d]) % n  # 1번-N번 행 연결되어있기 때문
+        ny = (y + s * dy[d]) % n
         after.append([nx,ny,m,s,d])
     
     return after
