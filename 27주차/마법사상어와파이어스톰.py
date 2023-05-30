@@ -16,24 +16,11 @@ def rotate(L): # 부분 격자 회전 함수.
     new = [[0]*LEN for _ in range(LEN)]
     for i in range(0,LEN, 2**L): 
         for j in range(0,LEN, 2**L):
-            # 2^L x 2^L 부분 격자 회전 결과만 담기 위한 배열 arr.
-            arr = []
-            for x in range(i, i+2**L):
-                a = []
-                for y in range(j,j + 2**L):
-                    a.append(ice[x][y])
-                arr.append(a)
+    
             # 시계방향 90도 회전.
-            tmp = [[0]*len(arr) for _ in range(len(arr))]
             for x in range(2**L):
                 for y in range(2**L):
-                    tmp[y][2**L-1-x] = arr[x][y]
-            
-            # 현재 부분 격자 부분에 회전 결과 할당
-            for x in range(2**L):
-                for y in range(2**L):
-                    new[x+i][y+j] = tmp[x][y]
-            
+                    new[i+y][j+2**L-1-x] = ice[i+x][j+y]
             
     # 바뀐 부분 할당.
     ice = new
