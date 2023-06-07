@@ -1,96 +1,87 @@
-dx = [-1,-1,0,1,1,1,0,-1]
-dy = [0,-1,-1,-1,0,1,1,1]
+import sys; input = sys.stdin.readline
+import copy
 
-fish = [[0]*3 for _ in range(17)]
-g = []
-answer = 0
-for i in range(4):
-    a = list(map(int,input().split()))
-    g.append([a[0],a[2],a[4],a[6]])
-    for j in range(4):
-        fish[g[i][j]] = [i,j, a[j*2 + 1]-1]
+# 물고기 좌표 찾는 함수
+def find_fish(graph, fish):
+    for i in range(N):
+        for j in range(N):
+            if graph[i][j][0] == fish:
+                return (i, j)
 
-shark = [0,0,fish[g[0][0]][2]]
-answer += g[0][0]
-fish[g[0][0]] = [-1,-1,-1]
-g[0][0] = -1
+# 모든 물고기 이동시키는 함수
+def move_fish(x_shark, y_shark, graph):
+    # 번호가 낮은 물고기부터 순차 이동
+    for fish in range(1, 17):
+        # 물고기 좌표 찾기
+        position = find_fish(graph, fish)
+        # 해당 물고기가 살아있는 경우
+        if position:
+            x_fish, y_fish = position[0], position[1] # 좌표 리턴받기
+            direction = graph[x_fish][y_fish][1]
+            # 반시계 방향으로 45도씩 최대 360도(1바퀴)까지 회전
+            for _ in range(len(d)):
+                # 해당 방향으로 진행
+                nx_fish = x_fish + d[direction][0]
+                ny_fish = y_fish + d[direction][1]
+                # 맵 내부 위치한 경우
+                if 0 <= nx_fish < N and 0 <= ny_fish < N:
+                    # 진행할 곳에 상어가 없는 경우
+                    if not (nx_fish == x_shark and ny_fish == y_shark):
+                        # 해당 방향을 진행방향으로 확정
+                        graph[x_fish][y_fish][1] = direction
+                        # 물고기 간 위치 변경
+                        graph[nx_fish][ny_fish], graph[x_fish][y_fish] = graph[x_fish][y_fish], graph[nx_fish][ny_fish]
+                        break # 진행방향이 확정되었기 때문에 진행 방향을 더 이상 바꿀 필요 없음
+                direction = (direction + 1) % len(d)
 
-print(fish)
+# 상어의 이동가능한 좌표 찾는 함수
+def get_movable_position(x_shark, y_shark, graph):
+    direction = graph[x_shark][y_shark][1] # 상어 진행방향
+    position = []
+    # 최대 (맵 크기 -1)까지 이동 가능
+    for _ in range(N-1):
+        # 진행방향으로 전진
+        x_shark += d[direction][0]
+        y_shark += d[direction][1]
+        # 진행 후 맵 내부에 위치해 있으며 물고기가 존재하는 경우
+        if 0 <= x_shark < N and 0 <= y_shark < N and graph[x_shark][y_shark][0] != -1:
+            position.append((x_shark, y_shark))
+    return position
 
-def fishM():
-    global g,fish
-    for i,v in enumerate(fish):
-        if sum(v) >= 0:
-            x,y,d = v
-            nx = x
-            ny = y
-            idx = d
-            for _ in range(8):
-                nx += dx[idx]
-                ny += dy[idx]
-                idx += 1
-                idx %= 8
-                
-                if 0 <= nx < 4 and 0 <= ny < 4 and [shark[0],shark[1]] != [nx,ny]:
-                    f = g[x][y]
-                    t = g[nx][ny] # 갈 수 있는 방향의 칸의 번호.
-                    if t == -1: # 물고기가 칸에 없다면
-                        a = g[x][y]
-                        g[nx][ny] = a
-                        fish[f][0],fish[f][1] = nx,ny
-                        g[x][y] = -1
-                    else:
-                        g[x][y], g[nx][ny] = g[nx][ny],g[x][y]
-                        fish[f][0],fish[f][1] = nx,ny
-                        fish[t][0],fish[t][1] = x,y
-                
-                    break
-def candidate():
-    global shark
-    arr = []
-    x,y,d = shark
-    nx = x
-    ny = y
-    
-    while True:
+# 물고기를 모두 먹을 때까지 물고기와 상어를 이동시키는 재귀함수
+def dfs(x_shark, y_shark, eat, graph):
+    global answer
+    new = copy.deepcopy(graph)
+    # 상어가 해당 물고기 잡아먹음
+    eat += new[x_shark][y_shark][0]
+    new[x_shark][y_shark][0] = -1 # 해당 위치 물고기 잡아먹힘 표시
+    move_fish(x_shark, y_shark, new) # 모든 물고기 이동
+    # 상어의 이동가능한 좌표(=물고기 위치) 
+    position = get_movable_position(x_shark, y_shark, new)
 
-        nx += dx[d]
-        ny += dy[d]
-        
-        if 0 <= nx < 4 and 0 <= ny < 4:
-            if g[nx][ny] != -1: # 물고기가 있다면,
-                arr.append((nx,ny))
-        else:
-            break
-    
-    return arr
-
-def dfs(total):
-    global answer, shark
-    
-    answer = max(answer,total)
-    fishM()
-    print(g)
-    arr = candidate()
-    if len(arr) == 0: # 상어가 이동할 수 있는 칸이 없다면.
+    # 이동가능한 좌표가 남은 경우
+    if position:
+        for nx_shark, ny_shark in position:
+            dfs(nx_shark, ny_shark, eat, new)
+    else:
+        answer = max(answer, eat)
         return
+
+if __name__ == '__main__':
+    N = 4
+    graph = [[None]*N for _ in range(N)]
+    for i in range(N):
+        data = list(map(int, input().split()))
+        for j in range(N):
+            # 물고기 번호, 방향 정보 
+            graph[i][j] = [data[2*j], data[2*j+1]-1]
+
+    d = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1)]
+    x_shark = y_shark = 0
+    answer = 0
     
-    for x,y in arr:
-        
-        tx,ty,td = shark
-        num = g[x][y]
-        
-        tmp = fish[num][:]
+    dfs(x_shark, y_shark, 0, graph)
+    print(answer)
 
-        shark = [x,y,fish[g[x][y]][2]]
-        g[x][y] = -1
-        fish[g[x][y]] = [-1,-1,-1]
-        
-        dfs(total+num)
-
-        fish[num] = tmp[:]
-        g[x][y] = num
-        shark = tx,ty,td
-
-dfs(answer)
-print(answer)
+    # 참고하여 다시 풀기
+    
