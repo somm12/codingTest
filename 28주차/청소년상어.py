@@ -1,87 +1,67 @@
-import sys; input = sys.stdin.readline
-import copy
+import copy # deepcopy 사용해서 재귀 호출에서 참조를 막기 위함.
+board = [[]*4 for _ in range(4)]
+answer = 0
+# 8가지 방향. -> 방향갈 수 록 반시계.
+dx = [-1,-1,0,1,1,1,0,-1]
+dy = [0,-1,-1,-1,0,1,1,1]
 
-# 물고기 좌표 찾는 함수
-def find_fish(graph, fish):
-    for i in range(N):
-        for j in range(N):
-            if graph[i][j][0] == fish:
-                return (i, j)
+for i in range(4):
+    a = list(map(int,input().split()))
+    for j in range(4):
+        board[i].append([a[2*j], a[2*j + 1]-1])
+# 해당 번호를 가진 물고기가 존재하는지 확인하고 존재하면 x,y 위치를 반환.
+def isFishExist(board,num):
+    for x in range(4):
+        for y in range(4):
+            if board[x][y][0] == num:
+                return (x,y)
+# 물고기가 낮은 번호 순서로 움직인다.
+def fishMove(sx,sy,board):
+    for i in range(1,17):
+        pos = isFishExist(board,i)
+        if pos: # i번 물고기가 존재한다면,
+            x,y = pos
+            d = board[x][y][1] # 물고기가 가진 방향.
+            nx = x
+            ny = y
+            for _ in range(8): # 반시계 방향으로 이동 할 수 있는 칸 만날때 까지 반복.
+                nx = x+ dx[d]
+                ny = y + dy[d]
+                if 0 <= nx < 4 and 0 <= ny < 4 and [nx,ny] != [sx,sy]:
+                    tox,toy = board[nx][ny]
+                    board[nx][ny] = [i,d] # 현재 물고기 이동. [현재 물고기 번호, 현재 가리키는 방향]
+                    board[x][y] = [tox,toy] # 원래 있던 자리 물고기는 x,y로 이동.
+                    break # 이동 했으니 break
+                d += 1
+                d %= 8 # index out of range 막기.
 
-# 모든 물고기 이동시키는 함수
-def move_fish(x_shark, y_shark, graph):
-    # 번호가 낮은 물고기부터 순차 이동
-    for fish in range(1, 17):
-        # 물고기 좌표 찾기
-        position = find_fish(graph, fish)
-        # 해당 물고기가 살아있는 경우
-        if position:
-            x_fish, y_fish = position[0], position[1] # 좌표 리턴받기
-            direction = graph[x_fish][y_fish][1]
-            # 반시계 방향으로 45도씩 최대 360도(1바퀴)까지 회전
-            for _ in range(len(d)):
-                # 해당 방향으로 진행
-                nx_fish = x_fish + d[direction][0]
-                ny_fish = y_fish + d[direction][1]
-                # 맵 내부 위치한 경우
-                if 0 <= nx_fish < N and 0 <= ny_fish < N:
-                    # 진행할 곳에 상어가 없는 경우
-                    if not (nx_fish == x_shark and ny_fish == y_shark):
-                        # 해당 방향을 진행방향으로 확정
-                        graph[x_fish][y_fish][1] = direction
-                        # 물고기 간 위치 변경
-                        graph[nx_fish][ny_fish], graph[x_fish][y_fish] = graph[x_fish][y_fish], graph[nx_fish][ny_fish]
-                        break # 진행방향이 확정되었기 때문에 진행 방향을 더 이상 바꿀 필요 없음
-                direction = (direction + 1) % len(d)
-
-# 상어의 이동가능한 좌표 찾는 함수
-def get_movable_position(x_shark, y_shark, graph):
-    direction = graph[x_shark][y_shark][1] # 상어 진행방향
-    position = []
-    # 최대 (맵 크기 -1)까지 이동 가능
-    for _ in range(N-1):
-        # 진행방향으로 전진
-        x_shark += d[direction][0]
-        y_shark += d[direction][1]
-        # 진행 후 맵 내부에 위치해 있으며 물고기가 존재하는 경우
-        if 0 <= x_shark < N and 0 <= y_shark < N and graph[x_shark][y_shark][0] != -1:
-            position.append((x_shark, y_shark))
-    return position
-
-# 물고기를 모두 먹을 때까지 물고기와 상어를 이동시키는 재귀함수
-def dfs(x_shark, y_shark, eat, graph):
+def sharkMove(sx,sy,board): # 상어 이동. 이동 가능한 칸 위치 배열 반환.
+    arr = []
+    d = board[sx][sy][1] # 상어의 위치.
+    nx = sx
+    ny = sy
+    for _ in range(3): # 최대 3칸 이동(4x4 이기 때문.)
+        nx += dx[d]
+        ny += dy[d]
+        # 범위 내, 물고기가 있는 칸만 이동 가능.
+        if 0 <= nx < 4 and 0 <= ny < 4 and board[nx][ny][0] != -1: 
+            arr.append((nx,ny))
+    return arr
+   
+ # 상어가 선택한 이동 칸 들의 모든 경우를 완전 탐색하여, 먹은 물고기 번호 합 구하기.
+def dfs(sx,sy,eat,board): # 상어의 위치와, 현재까지의 먹은 번호 합, 현재까지 board 상태.
     global answer
-    new = copy.deepcopy(graph)
-    # 상어가 해당 물고기 잡아먹음
-    eat += new[x_shark][y_shark][0]
-    new[x_shark][y_shark][0] = -1 # 해당 위치 물고기 잡아먹힘 표시
-    move_fish(x_shark, y_shark, new) # 모든 물고기 이동
-    # 상어의 이동가능한 좌표(=물고기 위치) 
-    position = get_movable_position(x_shark, y_shark, new)
+    new = copy.deepcopy(board) # deepcopy 사용으로 참조가 발생 막기
+    eat += new[sx][sy][0] # 물고기 번호 더하기
+    new[sx][sy][0] = -1 # 물고기가 제거 표시로 번호 부분에 -1 할당.
 
-    # 이동가능한 좌표가 남은 경우
-    if position:
-        for nx_shark, ny_shark in position:
-            dfs(nx_shark, ny_shark, eat, new)
-    else:
-        answer = max(answer, eat)
+    fishMove(sx,sy,new) # 물고기 이동
+    
+    arr = sharkMove(sx,sy,new) # 상어이동
+    if len(arr) == 0: # 상어가 더이상 이동X 상태가 된다면, eat 업데이트 및 재귀 호출 종료.
+        answer = max(answer,eat)
         return
-
-if __name__ == '__main__':
-    N = 4
-    graph = [[None]*N for _ in range(N)]
-    for i in range(N):
-        data = list(map(int, input().split()))
-        for j in range(N):
-            # 물고기 번호, 방향 정보 
-            graph[i][j] = [data[2*j], data[2*j+1]-1]
-
-    d = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1)]
-    x_shark = y_shark = 0
-    answer = 0
-    
-    dfs(x_shark, y_shark, 0, graph)
-    print(answer)
-
-    # 참고하여 다시 풀기
-    
+    for x,y in arr: # 상어가 이동 가능한 좌표를 반환하고 해당 위치로 상어가 이동.
+        dfs(x,y,eat,new)
+dfs(0,0,0,board) # 처음에 상어가 0,0으로 이동한다.
+print(answer)
