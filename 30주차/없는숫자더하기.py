@@ -1,6 +1,5 @@
 def solution(numbers):
     result = 0
-    arr = [i for i in range(10)]
     check = [0] * 10
     for i in numbers:
         check[i] = 1
