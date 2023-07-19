@@ -36,7 +36,7 @@ def dfs(L,total, horse):
                 prev = horse[i]
                 horse[i] = x
                 dfs(L+1,total+score[x], horse)
-                horse[i] = prev
+                horse[i] = prev # 백트래킹
 dfs(0,0,[0,0,0,0])
 print(answer)
 
