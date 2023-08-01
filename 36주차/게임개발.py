@@ -33,3 +33,4 @@ while True:
         d = di
     cnt += 1
 print(answer)
+# 이코테 구현 예제
