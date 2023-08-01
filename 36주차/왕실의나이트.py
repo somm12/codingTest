@@ -21,3 +21,4 @@ for arr in route:
         print(arr)
         answer += 1
 print(answer)
+# 이코테 실전문제.
