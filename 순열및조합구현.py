@@ -6,9 +6,8 @@ def combination(arr, n):
             temp.append(comb)
             return
         for i in range(start,len(arr)):
-            if i > start:
-                combi(comb+[arr[i]],i)
-    combi([],-1)
+            combi(comb+[arr[i]],i+1)
+    combi([],0)
     return temp
    
 print(combination([1,2,3,4], 3))
@@ -45,9 +44,8 @@ def combination2(arr,n):
             res.append(p)
             return
         for i in range(idx,len(arr)):
-            if i >= idx:
-                comb(p+[arr[i]],i)
-    comb([],-1)
+            comb(p+[arr[i]],i)
+    comb([],0)
     return res
 
 print(combination2([1,2,3,4],2))

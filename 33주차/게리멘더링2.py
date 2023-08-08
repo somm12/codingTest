@@ -70,8 +70,7 @@ def divideArea(tmp,x,y,d1,d2):# 1,2,3,4번 구역과 5번 구역 할당.
     
     for r in range(1,n+1):
         for c in range(1,n+1):
-            if tmp[r][c] == 0:
-                
+            if tmp[r][c] == 0:               
                 tmp[r][c] = 5
    
     return tmp

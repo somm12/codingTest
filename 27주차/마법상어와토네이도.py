@@ -19,7 +19,7 @@ def go():
         if d % 2 ==0: # 1칸, 1칸 ,2칸, 2칸, 3,3 .. 등 2개씩 점점 움직이는 칸수가 +1 늘어남.
             cnt += 1
         for _ in range(cnt): 
-            tx += dx[d] # 토네이도가 한 칸 움직임.
+            tx += dx[d] # 이도가 한 칸 움직임.
             ty += dy[d]
             if tx == 0 and ty == -1: # 혹시 마지막인 0,0에서 이동을 마치게 된다면 종료.
                 return total
