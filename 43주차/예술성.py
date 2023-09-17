@@ -10,7 +10,7 @@ answer =0
 
 def dfs(x,y,visited, value,res):# 같은 숫자를 가진 각 그룹을 만들기. res에 모든 좌표를 추가.
 
-    visited[x][y] = 1
+    
     for i in range(4):
         nx = x+dx[i]
         ny = y + dy[i]
@@ -18,7 +18,21 @@ def dfs(x,y,visited, value,res):# 같은 숫자를 가진 각 그룹을 만들�
             res.append((nx,ny))
             dfs(nx,ny,visited,value,res)
     return res
-
+# def dfs(x,y,visited, value,res):
+  
+   
+#     visited[x][y] = 1
+#     stack = [(x,y)]
+#     while stack:
+#         x, y = stack.pop()
+#         for di, dj in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+#             nx, ny = x + di, y + dj
+#             if 0 <= nx < n and 0 <= ny < n and visited[nx][ny] == 0 and value == g[nx][ny]:
+#                 visited[nx][ny] = 1
+#                 stack.append((nx, ny))
+#                 res.append((nx,ny))
+                
+#     return res
 def combi(length):# 2쌍씩 조합 구하기.
     arr = []
     def com(res,start):
