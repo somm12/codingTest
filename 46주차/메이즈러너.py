@@ -83,12 +83,12 @@ for _ in range(k):
 
     move()
 
-    if len(people) == 0:
+    if len(people) == 0:# 모든 참가자 탈출 시 게임끝. 움직이고 난 후에 참가자가 사라지므로, break문 두기.
         break
 
-    a,b,length = choose()
+    a,b,length = choose()# 가장 작은 정사각형의 좌측상단 좌표와 길이 반환.
 
-    rotate(a,b,length)
+    rotate(a,b,length)# 회전 시키기 -> 참가자, 탈출구도 회전 됨.
 print(answer)
 print(ex+1,ey+1)
 
