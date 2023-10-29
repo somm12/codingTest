@@ -4,3 +4,4 @@ function solution(arr, delete_list) {
   return answer;
 }
 // delete_list에 있는 원소는 arr에서 다 삭제.
+// 프로그래머스.
