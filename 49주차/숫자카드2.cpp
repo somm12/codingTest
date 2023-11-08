@@ -6,7 +6,7 @@ int main(){
     ios_base::sync_with_stdio(false);// cin, cout 속도 높이기
     cin.tie(0);
 
-    
+
     int N;
     cin >> N;
     map<int,int> p;
@@ -46,3 +46,4 @@ int main(){
         cin >> num;
         cout << upper_bound(v.begin(), v.end(), num) - lower_bound(v.begin(), v.end(), num) << ' ';
     }
+    // c++ map 사용해보기
