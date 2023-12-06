@@ -16,7 +16,7 @@ function solution(n, wires) {
       // u노드와 연결된 노드들.
 
       if (v != parent[u]) {
-        // 연결된 v가 u의 자식이 아니면 할당하기.
+        // u와 연결된 v가 u의 부모가 아니면
         parent[v] = u; // v의 부모를 u로 할당.
         leafToRoot.push(v); // 루트에서 점점 자식 쪽으로 아래로 내려가는 순회를 담는다.
       }
