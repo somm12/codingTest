@@ -35,5 +35,13 @@ const combi = (arr, n) => {
   return res;
 };
 
-console.log(permut([1, 2, 3], 2));
-console.log(combi([1, 2, 3], 2));
+// console.log(permut([1, 2, 3,4], 2));
+
+arr = combi([1, 2, 3, 4], 2);
+let res = [];
+for (let i = 0; i < arr.length / 2; i++) {
+  let [a, b] = [arr[i], arr[arr.length - 1 - i]];
+  res.push([a, b]);
+  res.push([b, a]);
+}
+console.log(res);
