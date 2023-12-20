@@ -53,4 +53,4 @@ for _ in range(tc):
                 visited[i][j] =1
                 q.append((i,j,0))# 상근이 위치
     print(bfs())
-    
+# 백준 .
