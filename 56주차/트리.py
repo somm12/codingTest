@@ -60,6 +60,22 @@ for v in des:
     if v == 0:
         answer += 1
 print(answer)
+# 더 쉬운 풀이
 
+cnt = 0
+def dfs(x):
+    arr[x] = -2
+    for i in range(n):
+        if arr[i] == x:# 자기 자식인 경우만 -2 할당해서 삭제.
+            dfs(i)
+
+n = int(input())
+arr =list(map(int,input().split()))
+dfs(int(input()))
+
+for i,v in enumerate(arr):
+    if v != -2 and i not in arr:# 리프노드는 다른 노드의 부모가 아님.
+        cnt +=1
+print(cnt)
 
 
