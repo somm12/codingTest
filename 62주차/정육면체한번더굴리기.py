@@ -46,13 +46,13 @@ def directChange():
     global di
     bottom = dice[-1]
     board = g[diceX][diceY]
-    if bottom > board:
-        di = (di+1)%4
+    if bottom > board:# 시계 90도 회전
+        di = (di+1)%4# 반시계 90도 회전
     elif bottom < board:
         di = (di-1)%4
     nx,ny = diceX + dx[di], diceY + dy[di]
 
-    if not inRange(nx,ny):
+    if not inRange(nx,ny):# 만약 격자를 벗어나게 되는 방향이라면, 반대 방향으로 변경
         di = (di+2)%4
 
 for _ in range(m):
