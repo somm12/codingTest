@@ -7,14 +7,7 @@ const rl = readline.createInterface({
 const dx = [-1, 1, 0, 0];
 const dy = [0, 0, -1, 1];
 const melting = () => {
-  const tmp = Array(N) // 임시 배열 복사. 원본 배열로 계산하면, 답이 틀림.
-    .fill()
-    .map((e) => Array(M).fill(0));
-  for (let i = 0; i < N; i++) {
-    for (let j = 0; j < M; j++) {
-      tmp[i][j] = g[i][j];
-    }
-  }
+  const tmp = g.map((ar) => [...ar]);
   for (let x = 1; x < N - 1; x++) {
     for (let y = 1; y < M - 1; y++) {
       if (g[x][y] > 0) {
@@ -29,12 +22,7 @@ const melting = () => {
     }
   }
 
-  for (let i = 0; i < N; i++) {
-    // 녹고난 후 상태를 원본 배열에 업데이트.
-    for (let j = 0; j < M; j++) {
-      g[i][j] = tmp[i][j];
-    }
-  }
+  g = tmp.map((ar) => [...ar]);
 };
 
 const dfs = (x, y) => {
