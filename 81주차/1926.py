@@ -28,4 +28,4 @@ for x in range(n):
             total +=1
 print(total)
 print(maxSize)
-#백준.
+#백준 그림
