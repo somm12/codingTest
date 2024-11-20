@@ -8,7 +8,7 @@ const solution = () => {
   const dp = new Array(n).fill(-1001); // 가장 최소가 되는 값은 -1001이므로 이를 할당 해준다.
   dp[0] = arr[0];
   for (let i = 1; i < n; i++) {
-    dp[i] = Math.max(dp[i], dp[i - 1] + arr[i]);
+    dp[i] = Math.max(arr[i], dp[i - 1] + arr[i]);
   }
   console.log(Math.max(...dp));
 };
