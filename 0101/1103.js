@@ -16,14 +16,14 @@ const solution = () => {
     }
 
     if (dp[x][y]) return dp[x][y];
-    check[x][y] = 1;
+    check[x][y] = 1; // 방문 처리.
 
     const value = +arr[x][y];
     for (let i = 0; i < 4; i++) {
       const [nx, ny] = [x + dx[i] * value, y + dy[i] * value];
       dp[x][y] = Math.max(dp[x][y], go(nx, ny) + 1); // 한 칸씩 이동.
     }
-    check[x][y] = 0;
+    check[x][y] = 0; // 해당 지점 방문 처리를 지우고, 다시 다른 지점으로 이동하는 경우를 본다.
     return dp[x][y];
   };
 
