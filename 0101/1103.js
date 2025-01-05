@@ -6,28 +6,30 @@ const rl = readline.createInterface({
 const dx = [-1, 1, 0, 0];
 const dy = [0, 0, -1, 1];
 const solution = () => {
-  const check = new Array(n).fill().map((e) => new Array(m).fill(0));
-  const dp = new Array(n).fill().map((e) => new Array(m).fill(0));
-  const go = (x, y) => {
-    if (x < 0 || x >= n || y < 0 || y >= m || arr[x][y] === "H") return 0;
-    if (check[x][y]) {
+  const visited = new Array(n).fill().map(() => new Array(m).fill(0));
+  const dp = new Array(n).fill().map(() => new Array(m).fill(0));
+
+  const move = (x, y) => {
+    if (x < 0 || x >= n || y < 0 || y >= m || arr[x][y] === "H") {
+      return 0;
+    }
+    if (visited[x][y]) {
       console.log(-1);
       process.exit();
     }
-
-    if (dp[x][y]) return dp[x][y];
-    check[x][y] = 1; // 방문 처리.
-
+    if (dp[x][y]) {
+      return dp[x][y];
+    }
     const value = +arr[x][y];
+    visited[x][y] = 1;
     for (let i = 0; i < 4; i++) {
       const [nx, ny] = [x + dx[i] * value, y + dy[i] * value];
-      dp[x][y] = Math.max(dp[x][y], go(nx, ny) + 1); // 한 칸씩 이동.
+      dp[x][y] = Math.max(dp[x][y], move(nx, ny) + 1);
     }
-    check[x][y] = 0; // 해당 지점 방문 처리를 지우고, 다시 다른 지점으로 이동하는 경우를 본다.
+    visited[x][y] = 0; // 재귀 호출 이후 다시 돌아오면서 방문처리를 지우면서 다른 경우 찾기.
     return dp[x][y];
   };
-
-  console.log(go(0, 0)); // 초기 출발점에 최대 몇 번 이동할 수 있는지를 쌓는다.
+  console.log(move(0, 0));
 };
 let cnt = 0;
 const arr = [];
